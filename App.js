@@ -22,6 +22,7 @@ export default function App() {
   const [clientPhone, setClientPhone] = useState("");
   const [clientAddress, setClientAddress] = useState("");
   const [clientZonecode, setClientZonecode] = useState("");
+
   const URL = "http://118.46.5.236:80/test/evt_export.php";
   useEffect(() => {}, []);
 
@@ -78,10 +79,10 @@ export default function App() {
     console.log("mung deel");
     axios
       .get(URL, {
-        name: "사용자",
-        phone: "010-1111-1111",
-        addr: "경기도 성남시 어딘가",
-        p_name: "강아지 사료",
+        name: clientName,
+        phone: clientPhone,
+        addr: clientAddress,
+        p_name: "로얄캐닌",
         mb_id: "user01",
       })
       .then(function (response) {
