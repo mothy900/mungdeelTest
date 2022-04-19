@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import Postcode from "@actbase/react-daum-postcode";
 import axios from "axios";
 
@@ -6,13 +5,8 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
   TextInput,
-  TouchableHighlight,
-  Button,
   TouchableOpacity,
-  Modal,
-  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
@@ -23,7 +17,7 @@ export default function App() {
   const [clientAddress, setClientAddress] = useState("");
   const [clientZonecode, setClientZonecode] = useState("");
 
-  const URL = "http://118.46.5.236:80/test/evt_export.php";
+  const URL = "http://118.46.5.236:80/html/api/event/evt_export.php";
   useEffect(() => {}, []);
 
   const getlocation = () => {
@@ -36,7 +30,7 @@ export default function App() {
               console.log("back");
             }}
           >
-            <Text>hi</Text>
+            <Text>뒤로가기</Text>
           </TouchableOpacity>
         </View>
         <Postcode
@@ -74,22 +68,27 @@ export default function App() {
     console.log(clientPhone);
   };
 
-  const submitMungDeel = () => {
+  const submitMungDeel = async () => {
     //api 가져오기
     console.log("mung deel");
-    axios
-      .get(URL, {
+
+    await axios({
+      url: URL,
+      method: "POST",
+      data: {
         name: clientName,
         phone: clientPhone,
         addr: clientAddress,
         p_name: "로얄캐닌",
         mb_id: "user01",
-      })
+      },
+    })
       .then(function (response) {
+        alert(response.data.message);
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        //console.log(error);
       });
   };
   return (
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "skyblue",
     margin: 20,
   },
 });
